@@ -1,0 +1,58 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <title>
+    Argon Dashboard by Creative Tim
+  </title>
+  <!-- Basic styles for this template::: bootstrap-fs -->
+  {% block css %}
+  <!-- fonts -->
+  <link href="{% static 'theme/assets/css/nucleo-icons.css' %}" rel="stylesheet" />
+  <link href="{% static 'theme/assets/css/nucleo-svg.css' %}" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Argon -->
+  <link id="pagestyle" href="{% static 'theme/assets/css/argon-dashboard.css' %}" rel="stylesheet" />
+  <!-- Custom local style -->
+  <link rel="stylesheet" href="{% static 'theme/css/style.css' %}" />
+  {% endblock css %}
+
+</head>
+
+<body class="">
+
+  <!-- Basic JS -->
+  {% block jstop %}
+
+  <script src="{% static 'theme/assets/js/core/popper.min.js' %}"></script>
+  <script src="{% static 'theme/assets/js/core/bootstrap.min.js' %}"></script>
+
+  <!-- Control Center for Argon Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="{% static 'theme/assets/js/argon-dashboard.min.js' %}"></script>
+
+  {% endblock jstop %}
+
+  {% if user.is_authenticated %}
+  {% endif %}
+
+  {% block content %}
+
+  {% endblock content %}
+
+
+  {% block js %}
+  {% endblock js %}
+
+</body>
+
+</html>

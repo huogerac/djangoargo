@@ -1,0 +1,111 @@
+{% extends 'theme/bootstrap.html' %}
+
+{% load humanize %}
+
+
+{% block content %}
+
+    <!-- Message -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <!-- Message End -->
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="text-center">Tasks list</h1>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <form action="{% url 'tasks.list' %}" method="get" enctype="multipart/form-data" style="margin: 20px 0;">{% csrf_token %}
+        <div class="row">
+            <div class="col-sm-6">
+                <input type="text" name="searchTask" class="form-control" placeholder="Search Task (Title/Desc)">
+            </div>
+            <div class="col-sm-6"> 
+                <input type="submit" class="btn btn-sm btn-primary" value="Search" />
+            </div>
+        </div>
+    </form>
+
+    <!-- List Cards -->
+            <div class="row">
+                {% for task in tasks %}
+                <div class="col-sm-3">
+
+                    <div class="card card-task {% if task.done %} bg-light text-dark {% else %} bg-secondary text-white {% endif %}mb-3" id="task_{{ task.id }}">
+
+                        <div class="card-body">
+
+                            <h5 class="card-title">{{ task.title }}</h5>
+                            <label> {{tasks.category.name}}
+                            <p class="card-text">
+                                <div style="width:100%;  max-width: 400px; height:100%; max-height: 60px; overflow:auto;"> 
+                                {{ task.description}}  
+                                </div>
+                                <br>
+                                {{ task.due_to|naturaltime }}
+                            </p>
+
+                            <br>
+                            <a href="{% url 'tasks.update' task.id %}" class='btn btn-sm btn-info'>
+                            <i class="bi bi-clipboard"></i> Update </a>
+                            &nbsp;&nbsp;
+                            <a href="{% url 'tasks.delete' task.id %}" class='btn btn-sm btn-danger'>
+                            <i class="bi bi-trash-fill"></i> Delete </a>
+                            &nbsp;&nbsp;
+                             
+                            {% if task.done %} <a href="{% url 'doneTask' task.id %}" class='btn btn-sm btn-secondary'>
+                                <i class="bi bi-check-square-fill"></i> Undone </a>
+                            {% else %}  <a href="{% url 'doneTask' task.id %}" class='btn btn-sm btn-primary'>
+                                <i class="bi bi-check-square"></i>  Done </a> {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        <a type="button" class="btn-danger btn-float" href="{% url 'tasks.insert' %}">
+            <span class="text-size-xlarge text-bold">
+            <i class="bi bi-plus"></i>
+            </span>
+        </a>
+</div>
+
+  
+    <!-- Pagination -->
+<ul class='pagination justify-content-center'>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; First</a> /
+                <a href="?page={{ page_obj.previous_page_number }}">Previous</a> /
+            {% else %}
+                First /
+                Previous /
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} / 
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Next</a> /
+                <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+            {% else %}
+                Next /
+                Last
+            {% endif %}
+        </span>
+    </div>
+  </ul>
+
+{% endblock content %}

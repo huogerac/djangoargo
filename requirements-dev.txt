@@ -1,0 +1,12 @@
+-r requirements.txt
+
+# Dev
+black==21.10b0
+django-debug-toolbar==3.2.2
+
+# Linter
+flake8==4.0.1
+
+# Tests
+pytest==6.2.5
+pytest-django==4.4.0
